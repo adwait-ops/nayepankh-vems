@@ -91,6 +91,9 @@ class Volunteer:
 
         cursor.execute(query, parameters)
         rows = cursor.fetchall()
+
+
+        
         conn.close()
         return rows
 
