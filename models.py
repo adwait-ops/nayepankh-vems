@@ -59,6 +59,8 @@ class Volunteer:
                     self.status,
                 ),
             )
+
+            
             conn.commit()
             return True, "Volunteer registered successfully!"
         except sqlite3.IntegrityError:

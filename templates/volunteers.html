@@ -38,34 +38,38 @@
                 <form action="/add-volunteer" method="POST" class="flex flex-col gap-4">
                     <div>
                         <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Full Name</label>
-                        <input type="text" name="name" required placeholder="e.g. Rahul Sharma" 
-                               class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
+                        <input type="text" name="name" required placeholder="e.g. Adwait Sharma" 
+                            class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Email Address</label>
-                        <input type="email" name="email" required placeholder="name@domain.com" 
-                               class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
+                        <input type="email" name="email" id="volEmail" required placeholder="e.g. name@domain.com" 
+                            class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500 peer">
+                        <p class="hidden peer-not-placeholder-shown:peer-invalid:block text-[11px] text-rose-600 font-medium mt-1">
+                            Please enter a valid email address (e.g. name@gmail.com).
+                        </p>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Mobile Contact</label>
-                        <input type="tel" name="phone" required placeholder="e.g. +91 98765 43210" 
-                               class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Contact Number</label>
+                        <input type="number" name="phone" required placeholder="e.g. 9876543210" 
+                            oninput="if(this.value.length > 10) this.value = this.value.slice(0, 10);"
+                            class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500 peer">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Preferred Operation Track</label>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Specialization Core Track</label>
                         <select name="assigned_drive" required class="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white focus:outline-none focus:border-amber-500">
-                            <option value="" disabled selected>Choose field vertical</option>
-                            <option value="stray_feeding">Stray Animal Feeding</option>
-                            <option value="sanitary_distribution">Sanitary Pad Distribution</option>
-                            <option value="slum_literacy">Slum Literacy Campaign</option>
-                            <option value="winter_clothes">Winter Clothes Mobilization</option>
+                            <option value="" disabled selected>Select specialization track</option>
+                            <option value="Stray Feeding">Stray Animal Feeding</option>
+                            <option value="Sanitary Distribution">Sanitary Pad Distribution</option>
+                            <option value="Slum Literacy">Slum Literacy Campaign</option>
+                            <option value="Winter Clothes">Winter Clothes Mobilization</option>
                         </select>
                     </div>
 
-                    <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2.5 rounded-lg text-sm mt-2 cursor-pointer transition-colors">
+                    <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2.5 rounded-lg text-sm mt-2 transition-colors cursor-pointer">
                         Add Volunteer
                     </button>
                 </form>

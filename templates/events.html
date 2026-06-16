@@ -102,9 +102,16 @@
                             
                             <select name="volunteer_id" id="volSelectionMenu" required size="4" class="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white focus:outline-none focus:border-amber-500">
                                 {% for vol in unassigned_volunteers %}
-                                    <option value="{{ vol.id }}">{{ vol.name }} — [Track: {{ vol.assigned_drive.replace('_', ' ').title() }}]</option>
+                                    <option value="{{ vol.id }}">
+                                        {{ vol.name }} — [Track: {{ vol.assigned_drive }}] 
+                                        {% if vol.active_assignments %}
+                                            (Assigned: {{ vol.active_assignments }})
+                                        {% else %}
+                                            (Idle)
+                                        {% endif %}
+                                    </option>
                                 {% else %}
-                                    <option value="" disabled>No idle volunteers remaining</option>
+                                    <option value="" disabled>No tracking records found inside network.</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -156,19 +163,20 @@
                                     </div>
                                     
                                     <button onclick="openRosterModal(this)" 
+                                            data-id="{{ event.id }}"
                                             data-title="{{ event.title }}" 
                                             data-roster='{{ event.volunteer_list|tojson }}'
                                             class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-bold px-2 py-1 rounded border border-slate-200 transition-colors cursor-pointer inline-flex items-center gap-1">
-                                            View Volunteers
+                                        View Volunteers
                                     </button>
                                 </td>
                                 <td class="p-4">
-                                    {% if event.status == 'Upcoming' or event.status == 'Scheduled' %}
+                                    {% if event.status == 'Upcoming' %}
                                         <span class="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold px-2.5 py-0.5 rounded-md">Upcoming</span>
-                                    {% elif event.status == 'Active' or event.status == 'In Progress' %}
-                                        <span class="bg-amber-50 text-amber-700 border border-amber-200 text-xs font-semibold px-2.5 py-0.5 rounded-md animate-pulse">Active</span>
+                                    {% elif event.status == 'Ongoing' %}
+                                        <span class="bg-amber-50 text-amber-700 border border-amber-200 text-xs font-semibold px-2.5 py-0.5 rounded-md animate-pulse">Ongoing</span>
                                     {% else %}
-                                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold px-2.5 py-0.5 rounded-md">Completed</span>
+                                        <span class="bg-slate-100 text-slate-500 border border-slate-200 text-xs font-semibold px-2.5 py-0.5 rounded-md">Expired</span>
                                     {% endif %}
                                 </td>
                                 <td class="p-4 text-center">
@@ -203,56 +211,66 @@
     </div>
 
     <script>
-    function filterVolunteerOptions() {
-        var input = document.getElementById("volSearchBox");
-        var filter = input.value.toUpperCase();
-        var select = document.getElementById("volSelectionMenu");
-        var options = select.options;
-        
-        for (var i = 0; i < options.length; i++) {
-            var text = options[i].text;
-            if (text.toUpperCase().indexOf(filter) > -1) {
-                options[i].style.display = "";
-            } else {
-                options[i].style.display = "none";
+        function filterVolunteerOptions() {
+            var input = document.getElementById("volSearchBox");
+            var filter = input.value.toUpperCase();
+            var select = document.getElementById("volSelectionMenu");
+            var options = select.options;
+            
+            for (var i = 0; i < options.length; i++) {
+                var text = options[i].text;
+                if (text.toUpperCase().indexOf(filter) > -1) {
+                    options[i].style.display = "";
+                } else {
+                    options[i].style.display = "none";
+                }
             }
         }
-    }
 
-    // Extraction function using safe dataset structures
-    function openRosterModal(buttonElement) {
-        var title = buttonElement.getAttribute('data-title');
-        var rosterRaw = buttonElement.getAttribute('data-roster');
-        
-        var namesArray = [];
-        try {
-            namesArray = JSON.parse(rosterRaw);
-        } catch (e) {
-            namesArray = [];
+        function openRosterModal(buttonElement) {
+            var eventId = buttonElement.getAttribute('data-id');
+            var title = buttonElement.getAttribute('data-title');
+            var rosterRaw = buttonElement.getAttribute('data-roster');
+            
+            var volunteerObjectsArray = [];
+            try {
+                volunteerObjectsArray = JSON.parse(rosterRaw);
+            } catch (e) {
+                volunteerObjectsArray = [];
+            }
+
+            document.getElementById('modalEventTitle').innerText = title + " Roster";
+            var listContainer = document.getElementById('modalVolunteerList');
+            listContainer.innerHTML = '';
+            
+            if (!volunteerObjectsArray || volunteerObjectsArray.length === 0) {
+                listContainer.innerHTML = '<li class="py-3 text-center text-slate-400 italic">No volunteers assigned to this drive yet.</li>';
+            } else {
+                volunteerObjectsArray.forEach(function(vol) {
+                    var li = document.createElement('li');
+                    li.className = 'py-2 flex items-center justify-between font-medium text-slate-800 border-b border-slate-50';
+                    
+                    li.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <span class="text-amber-500">👤</span>
+                            <span>${vol.name}</span>
+                        </div>
+                        <a href="/unassign-volunteer/${eventId}/${vol.id}" 
+                        class="text-rose-600 hover:text-rose-700 font-semibold hover:underline text-[11px] transition-colors bg-rose-50 px-2 py-0.5 rounded border border-rose-100">
+                            Unassign
+                        </a>
+                    `;
+                    listContainer.appendChild(li);
+                });
+            }
+            
+            document.getElementById('rosterModal').style.display = 'flex';
         }
 
-        document.getElementById('modalEventTitle').innerText = title + " Roster";
-        var listContainer = document.getElementById('modalVolunteerList');
-        listContainer.innerHTML = '';
-        
-        if (!namesArray || namesArray.length === 0) {
-            listContainer.innerHTML = '<li class="py-3 text-center text-slate-400 italic">No volunteers assigned to this drive yet.</li>';
-        } else {
-            namesArray.forEach(function(name) {
-                var li = document.createElement('li');
-                li.className = 'py-2 flex items-center gap-2 font-medium text-slate-800';
-                li.innerHTML = '<span class="text-amber-500">👤</span> ' + name;
-                listContainer.appendChild(li);
-            });
+        function closeRosterModal() {
+            document.getElementById('rosterModal').style.display = 'none';
         }
-        
-        document.getElementById('rosterModal').style.display = 'flex';
-    }
-
-    function closeRosterModal() {
-        document.getElementById('rosterModal').style.display = 'none';
-    }
-    </script>
+        </script>
 
     <footer class="w-full bg-slate-900 text-slate-400 py-4 text-center text-xs border-t border-slate-800">
         &copy; 2026 NayePankh Foundation Portal. All Rights Reserved.
