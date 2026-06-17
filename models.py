@@ -21,33 +21,28 @@ class Volunteer:
         self.phone = phone
         self.city = city
         self.pincode = pincode
-        self.skills = skills  #Expected as a comma-separated string (example: "Food Distribution, Social Media")
-        self.status = status  #Active, On-Leave, Completed
+        self.skills = skills  
+        self.status = status  
 
     @staticmethod
     def generate_next_id():
-        #automatically calculates next sequence identification string for a new volunteer
         conn = sqlite3.connect("nayepankh.db")
         cursor = conn.cursor()
 
-        #get total row count to safely increment sequential sequence
         cursor.execute("SELECT COUNT(*) FROM volunteers")
         count = cursor.fetchone()[0]
         conn.close()
 
         current_year = datetime.now().year
-        #returns a cleanly formatted, zero-padded structural ID token
         return f"NP-VOL-{current_year}-{str(count + 1).zfill(3)}"
 
     def save_to_db(self):
-        #maps and commits current instance to the sqlite database
         conn = sqlite3.connect("nayepankh.db")
         cursor = conn.cursor()
         try:
             cursor.execute(
                 """INSERT INTO volunteers (id, name, email, phone, city, pincode, skills, status) 
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-                #insert into values
                 (
                     self.id,
                     self.name,
@@ -64,7 +59,6 @@ class Volunteer:
             conn.commit()
             return True, "Volunteer registered successfully!"
         except sqlite3.IntegrityError:
-            #triggered if unique constraints (like email) are broken
             return (
                 False,
                 "Operational Fault: A volunteer with this email address is already registered.",
@@ -74,11 +68,9 @@ class Volunteer:
 
     @staticmethod
     def search_and_filter(search_query="", city_filter=""):
-        #class method: assembles and executes sql queries based on runtime search params passed down from the dashboard
         conn = sqlite3.connect("nayepankh.db")
         cursor = conn.cursor()
 
-        #base structure execution block
         query = "SELECT * FROM volunteers WHERE 1=1"
         parameters = []
 
@@ -114,15 +106,14 @@ class Event:
     ):
         self.id = event_id
         self.title = title
-        self.category = category  #example: Stray Feeding, Sanitary Drive, Education Pack
-        self.date = date  #ISO Date String format: yyyy-mm-dd
+        self.category = category  
+        self.date = date  
         self.location = location
         self.volunteers_needed = int(volunteers_needed)
-        self.status = status  #upcoming, ongoing, concluded
+        self.status = status  
 
     @staticmethod
     def save_event(title, category, date, location, volunteers_needed):
-        #commits newly proposed foundation project block into the events table
         conn = sqlite3.connect("nayepankh.db")
         cursor = conn.cursor()
         cursor.execute(
@@ -135,17 +126,14 @@ class Event:
 
     @staticmethod
     def assign_volunteer_to_event(event_id, volunteer_id):
-        #calculates the metrics to protect campaigns against over-allocation before committing
         conn = sqlite3.connect("nayepankh.db")
         cursor = conn.cursor()
 
-        #query current roster count for this target campaign ID
         cursor.execute(
             "SELECT COUNT(*) FROM allocations WHERE event_id = ?", (event_id,)
         )
         current_headcount = cursor.fetchone()[0]
 
-        #grab the maximum staffing capability threshold allowed for this event
         cursor.execute(
             "SELECT volunteers_needed FROM events WHERE id = ?", (event_id,)
         )
@@ -157,7 +145,6 @@ class Event:
 
         maximum_capacity = event_data[0]
 
-        #enforce threshold check 
         if current_headcount >= maximum_capacity:
             conn.close()
             return (
@@ -174,7 +161,6 @@ class Event:
             conn.commit()
             return True, "Volunteer assignment successfully committed to roster."
         except sqlite3.IntegrityError:
-            #catches double-assignment bugs caused by UNIQUE(event_id, volunteer_id) schema constraint
             return (
                 False,
                 "Constraint Warning: Selected volunteer is already assigned to this specific campaign",
@@ -184,7 +170,6 @@ class Event:
 
     @staticmethod
     def get_event_roster(event_id):
-        #fetches full profiles of volunteers mapped to a certain campaign id
         conn = sqlite3.connect("nayepankh.db")
         cursor = conn.cursor()
         cursor.execute(

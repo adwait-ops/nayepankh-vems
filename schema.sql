@@ -11,7 +11,7 @@ CREATE TABLE volunteers (
     assigned_drive TEXT NOT NULL
 );
 
---eventes table
+--events table
 CREATE TABLE IF NOT EXISTS events (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
