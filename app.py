@@ -2,20 +2,24 @@ import sqlite3
 import os
 import re
 import datetime
+from dotenv import load_dotenv
+
 from flask import Flask, render_template, request, redirect, url_for
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 template_dir = os.path.join(current_dir, 'templates')
+load_dotenv()
 
 app = Flask(__name__, template_folder=template_dir)
-app.secret_key = 'nayepankh_secret_session_key'
+app.secret_key = os.getenv("SECRET_KEY")
 
-DATABASE_FILE = 'nayepankh.db'
+
+
+DATABASE_FILE = os.getenv("DATABASE_FILE")
 
 
 def init_db():
-    """Initializes the SQLite database schema matching your exact column names."""
-    conn = sqlite3.connect(DATABASE_FILE)
+    conn = get_db_connection()
     cursor = conn.cursor()
     
     cursor.execute('''
@@ -71,7 +75,6 @@ def get_db_connection():
 
 
 def auto_assign_volunteers():
-    """Matches idle personnel to upcoming campaigns chronologically using correct schema."""
     conn = get_db_connection()
     cursor = conn.cursor()
     
@@ -296,4 +299,5 @@ def remove_event(id):
     return redirect('/events')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    init_db()
+    app.run()

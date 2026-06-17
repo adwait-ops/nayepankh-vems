@@ -135,7 +135,7 @@ celerybeat.pid
 *.rdb
 *.aof
 *.pid
-
+*.db
 # RabbitMQ
 mnesia/
 rabbitmq/
@@ -216,3 +216,5 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+nayepankh.db
+template.sqbpro
