@@ -4,16 +4,14 @@ import re
 import datetime
 from dotenv import load_dotenv
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-template_dir = os.path.join(current_dir, 'templates')
+template_dir = os.path.join(current_dir, 'html-pages')
 load_dotenv()
 
 app = Flask(__name__, template_folder=template_dir)
 app.secret_key = os.getenv("SECRET_KEY")
-
-
 
 DATABASE_FILE = os.getenv("DATABASE_FILE")
 
@@ -21,8 +19,6 @@ def get_db_connection():
     conn = sqlite3.connect(DATABASE_FILE)
     conn.row_factory = sqlite3.Row  
     return conn
-
-
 
 def init_db():
     conn = get_db_connection()
@@ -72,7 +68,6 @@ def init_db():
     conn.commit()
     conn.close()
 
-# init_db()
 
 
 def auto_assign_volunteers():
@@ -126,12 +121,23 @@ def auto_assign_volunteers():
     conn.commit()
     conn.close()
 
-
 @app.route('/')
 @app.route('/index.html')
 def index():
     return render_template('index.html')
 
+@app.route('/check-email', methods=['GET'])
+def check_email():
+    """Asynchronous validation endpoint used by JavaScript to prevent unique indexing crashes"""
+    email = request.args.get('email', '').strip()
+    if not email:
+        return jsonify({"exists": False})
+
+    conn = get_db_connection()
+    exists = conn.execute('SELECT 1 FROM volunteers WHERE email = ?', (email,)).fetchone() is not None
+    conn.close()
+    
+    return jsonify({"exists": exists})
 
 @app.route('/volunteers', methods=['GET'])
 def view_volunteers():
@@ -169,7 +175,6 @@ def add_volunteer():
         conn.commit()
         conn.close()
         auto_assign_volunteers()
-    
     except sqlite3.IntegrityError:
         pass
             
@@ -184,7 +189,6 @@ def remove_volunteer(volunteer_id):
     conn.commit()
     conn.close()
     return redirect(url_for('view_volunteers'))
-
 
 @app.route('/events', methods=['GET'])
 def view_events():
@@ -302,5 +306,20 @@ def remove_event(id):
     return redirect('/events')
 
 if __name__ == '__main__':
-    init_db()
-    app.run()
+    try:
+        init_db()
+    except Exception as e:
+        print(f"init_db() failed: {e}")
+        raise  
+
+    try:
+        port = int(os.environ.get('PORT', 5000))
+    except ValueError:
+        print("Invalid PORT value, falling back to 5000")
+        port = 5000
+
+    try:
+        app.run(port=port)
+    except Exception as e:
+        print(f"app.run() failed: {e}")
+        raise

@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,133 +23,87 @@
         </nav>
     </header>
 
-    <main class="w-full max-w-6xl mx-auto px-6 py-10 flex flex-col gap-10 grow">
+    <main class="w-full max-w-7xl mx-auto px-6 py-10 flex flex-col gap-10 grow">
         <div>
             <h2 class="text-3xl font-bold text-slate-900">Events Panel</h2>
             <p class="text-slate-500 text-sm mt-1">Schedule foundation drives, distribute resources, and track field execution.</p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-[260px_1fr_260px] gap-6 items-start">
             
-            <div class="flex flex-col gap-6 lg:col-span-1">
-                <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
-                    <h3 class="text-lg font-bold text-slate-900 mb-4">Schedule New Event</h3>
-                    
-                    <form action="/add-event" method="POST" class="flex flex-col gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Event Title</label>
-                            <input type="text" name="title" required placeholder="e.g. Winter Clothes Drive" 
-                                   class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
-                        </div>
+            <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                <h3 class="text-lg font-bold text-slate-900 mb-4">Schedule New Event</h3>
+                
+                <form action="/add-event" method="POST" class="flex flex-col gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Event Title</label>
+                        <input type="text" name="title" required placeholder="e.g. Winter Clothes Drive" 
+                               class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
+                    </div>
 
-                        <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Event Category</label>
-                            <select name="category" required class="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white focus:outline-none focus:border-amber-500">
-                                <option value="" disabled selected>Select category</option>
-                                <option value="Stray Feeding">Stray Animal Feeding</option>
-                                <option value="Sanitary Distribution">Sanitary Pad Distribution</option>
-                                <option value="Slum Literacy">Slum Literacy Campaign</option>
-                                <option value="Winter Clothes">Winter Clothes Mobilization</option>
-                            </select>
-                        </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Event Category</label>
+                        <select name="category" required class="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white focus:outline-none focus:border-amber-500">
+                            <option value="" disabled selected>Select category</option>
+                            <option value="Stray Feeding">Stray Animal Feeding</option>
+                            <option value="Sanitary Distribution">Sanitary Pad Distribution</option>
+                            <option value="Slum Literacy">Slum Literacy Campaign</option>
+                            <option value="Winter Clothes">Winter Clothes Mobilization</option>
+                        </select>
+                    </div>
 
-                        <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Volunteers Needed</label>
-                            <input type="number" name="volunteers_needed" required placeholder="e.g. 5" 
-                                class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
-                        </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Volunteers Needed</label>
+                        <input type="number" name="volunteers_needed" required placeholder="e.g. 5" 
+                            class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
+                    </div>
 
-                        <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Date</label>
-                            <input type="date" name="event_date" required 
-                                   class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
-                        </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Date</label>
+                        <input type="date" name="event_date" required 
+                               class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
+                    </div>
 
-                        <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Location</label>
-                            <input type="text" name="location" required placeholder="e.g. Sector 15 Slum Clusters" 
-                                   class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
-                        </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Location</label>
+                        <input type="text" name="location" required placeholder="e.g. Sector 15 Slum Clusters" 
+                               class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
+                    </div>
 
-                        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2.5 rounded-lg text-sm mt-2 cursor-pointer transition-colors">
-                            Add Event
-                        </button>
-                    </form>
-                </div>
-
-                <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
-                    <h3 class="text-md font-bold text-slate-900 mb-0.5">Manual Staffing</h3>
-                    <p class="text-[11px] text-slate-400 mb-4">Find volunteers and assign them to an event.</p>
-                    
-                    <form action="/manual-assign" method="POST" class="flex flex-col gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">1. Choose Event</label>
-                            <select name="event_id" required class="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white focus:outline-none focus:border-amber-500">
-                                <option value="" disabled selected>Select event...</option>
-                                {% for event in events %}
-                                    {% if event.slots_remaining > 0 %}
-                                        <option value="{{ event.id }}">{{ event.title }} (Needs {{ event.slots_remaining }} hands)</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">2. Find Volunteer</label>
-                            <input type="text" id="volSearchBox" onkeyup="filterVolunteerOptions()" placeholder="Type name to filter search..." 
-                                   class="w-full border border-slate-300 rounded-lg p-2.5 text-xs mb-2 focus:outline-none focus:border-amber-500 bg-slate-50">
-                            
-                            <select name="volunteer_id" id="volSelectionMenu" required size="4" class="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white focus:outline-none focus:border-amber-500">
-                                {% for vol in unassigned_volunteers %}
-                                    <option value="{{ vol.id }}">
-                                        {{ vol.name }} — [Track: {{ vol.assigned_drive }}] 
-                                        {% if vol.active_assignments %}
-                                            (Assigned: {{ vol.active_assignments }})
-                                        {% else %}
-                                            (Idle)
-                                        {% endif %}
-                                    </option>
-                                {% else %}
-                                    <option value="" disabled>No records found inside network.</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-lg text-sm mt-1 cursor-pointer transition-colors">
-                            Assign
-                        </button>
-                    </form>
-                </div>
+                    <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2.5 rounded-lg text-sm mt-2 cursor-pointer transition-colors">
+                        Add Event
+                    </button>
+                </form>
             </div>
 
-            <div class="bg-white border border-slate-200 rounded-xl shadow-sm lg:col-span-2 overflow-hidden">
+            <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
                 <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
                     <h3 class="text-md font-bold text-slate-900">Active Event Records</h3>
                     <span class="text-xs bg-slate-200 text-slate-700 font-medium px-2.5 py-1 rounded-full">Total: {{ events|length }}</span>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm border-collapse">
+                <div class="w-full overflow-hidden">
+                    <table class="w-full text-left text-sm border-collapse table-auto">
                         <thead>
                             <tr class="bg-slate-100 border-b border-slate-200 text-slate-500 font-medium text-xs uppercase">
-                                <th class="p-4">Event Title / Category</th>
-                                <th class="p-4">Date</th>
-                                <th class="p-4">Location</th>
-                                <th class="p-4 text-center">Staffing</th>
-                                <th class="p-4">Status</th>
-                                <th class="p-4 text-center">Action</th>
+                                <th class="px-3 py-3">Event Title / Category</th>
+                                <th class="px-2 py-3">Date</th>
+                                <th class="px-2 py-3">Location</th>
+                                <th class="px-2 py-3 text-center">Staffing</th>
+                                <th class="px-2 py-3">Status</th>
+                                <th class="px-2 py-3 text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 text-slate-700">
                             {% for event in events %}
                             <tr>
-                                <td class="p-4">
+                                <td class="px-3 py-3">
                                     <div class="font-bold text-slate-900">{{ event.title }}</div>
                                     <div class="text-xs text-slate-400 font-normal">{{ event.campaign_category }}</div>
                                 </td>
-                                <td class="p-4 text-sm font-medium text-slate-600">{{ event.event_date }}</td>
-                                <td class="p-4 text-slate-500">{{ event.location }}</td>
-                                <td class="p-4 text-center">
+                                <td class="px-2 py-3 text-sm font-medium text-slate-600 whitespace-nowrap">{{ event.event_date }}</td>
+                                <td class="px-2 py-3 text-slate-500">{{ event.location }}</td>
+                                <td class="px-2 py-3 text-center whitespace-nowrap">
                                     <div class="text-sm font-bold text-slate-900">
                                         {{ event.total_assigned }} / {{ event.volunteers_needed }}
                                     </div>
@@ -170,7 +123,7 @@
                                         View Volunteers
                                     </button>
                                 </td>
-                                <td class="p-4">
+                                <td class="px-2 py-3 whitespace-nowrap">
                                     {% if event.status == 'Upcoming' %}
                                         <span class="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold px-2.5 py-0.5 rounded-md">Upcoming</span>
                                     {% elif event.status == 'Ongoing' %}
@@ -179,7 +132,7 @@
                                         <span class="bg-slate-100 text-slate-500 border border-slate-200 text-xs font-semibold px-2.5 py-0.5 rounded-md">Expired</span>
                                     {% endif %}
                                 </td>
-                                <td class="p-4 text-center">
+                                <td class="px-2 py-3 text-center whitespace-nowrap">
                                     <a href="/remove-event/{{ event.id }}" class="text-xs font-semibold text-rose-600 hover:underline cursor-pointer">Cancel</a>
                                 </td>
                             </tr>
@@ -193,6 +146,50 @@
                 </div>
             </div>
 
+            <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                <h3 class="text-md font-bold text-slate-900 mb-0.5">Manual Staffing</h3>
+                <p class="text-[11px] text-slate-400 mb-4">Find volunteers and assign them to an event.</p>
+                
+                <form action="/manual-assign" method="POST" class="flex flex-col gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">1. Choose Event</label>
+                        <select name="event_id" required class="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white focus:outline-none focus:border-amber-500">
+                            <option value="" disabled selected>Select event...</option>
+                            {% for event in events %}
+                                {% if event.slots_remaining > 0 %}
+                                    <option value="{{ event.id }}">{{ event.title }} (Needs {{ event.slots_remaining }} hands)</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">2. Find Volunteer</label>
+                        <input type="text" id="volSearchBox" onkeyup="filterVolunteerOptions()" placeholder="Type name to filter search..." 
+                               class="w-full border border-slate-300 rounded-lg p-2.5 text-xs mb-2 focus:outline-none focus:border-amber-500 bg-slate-50">
+                        
+                        <select name="volunteer_id" id="volSelectionMenu" required size="4" class="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white focus:outline-none focus:border-amber-500">
+                            {% for vol in unassigned_volunteers %}
+                                <option value="{{ vol.id }}">
+                                    {{ vol.name }} — [Track: {{ vol.assigned_drive }}] 
+                                    {% if vol.active_assignments %}
+                                        (Assigned: {{ vol.active_assignments }})
+                                    {% else %}
+                                        (Idle)
+                                    {% endif %}
+                                </option>
+                            {% else %}
+                                <option value="" disabled>No records found inside network.</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-lg text-sm mt-1 cursor-pointer transition-colors">
+                        Assign
+                    </button>
+                </form>
+            </div>
+
         </div>
     </main>
 
@@ -202,7 +199,7 @@
             <p class="text-[11px] text-slate-400 mb-4">Currently deployed volunteers for this campaign.</p>
             
             <ul id="modalVolunteerList" class="divide-y divide-slate-100 max-h-48 overflow-y-auto mb-5 text-xs text-slate-700 pr-1">
-                </ul>
+            </ul>
             
             <button onclick="closeRosterModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2 rounded-lg text-xs cursor-pointer transition-colors">
                 Dismiss
@@ -270,7 +267,7 @@
         function closeRosterModal() {
             document.getElementById('rosterModal').style.display = 'none';
         }
-        </script>
+    </script>
 
     <footer class="w-full bg-slate-900 text-slate-400 py-4 text-center text-xs border-t border-slate-800">
         &copy; 2026 NayePankh Foundation Portal. All Rights Reserved.

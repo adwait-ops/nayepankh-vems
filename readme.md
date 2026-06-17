@@ -45,6 +45,22 @@ Follow these setups to set up the runtime environment locally:
    python app.py
 ```
 
+--- 
+
+## Screenshots
+
+### Home Page
+![Home Page](images/home_page.jpg)
+
+### Volunteers Panel
+![Volunteer Registration](images/volunteers.jpg)
+
+### Events Panel
+![Dashboard](images/events.jpg)
+
+--- 
+
+
 ## Cloud Hosting Limitation
 
 This application was initially planned for deployment on Vercel. However, hosting was not feasible because the project uses SQLite3, which stores data in a local database file (`nayepankh.db`).
@@ -54,6 +70,9 @@ This application was initially planned for deployment on Vercel. However, hostin
 
 As a result, the application requires a hosting solution with persistent storage or migration to a cloud-based database system.
 
+---
+
+
 ## Future Scalability
 
 To support future growth, the following enhancements are planned:
@@ -62,4 +81,7 @@ To support future growth, the following enhancements are planned:
 
 - **Automated Document Generation:** Enable automatic issuance of Certificates of Appreciation and Letters of Recommendation (LORs) when volunteers achieve predefined milestones.
 
-- **Cloud Database Migration:** Replace the local SQLite database with a cloud-hosted solution such as PostgreSQL or MySQL to improve scalability, reliability, and deployment flexibility.
+- **Cloud Database Migration:** Replace the local SQLite database with a cloud-hosted solution such as PostgreSQL or MySQL to improve scalability, reliability, and deployment 
+flexibility.
+
+- **Code Quality Improvements:** Further enhance the application's modular design and coding standards to support easier updates, improved maintainability, and long-term scalability.
