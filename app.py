@@ -17,6 +17,12 @@ app.secret_key = os.getenv("SECRET_KEY")
 
 DATABASE_FILE = os.getenv("DATABASE_FILE")
 
+def get_db_connection():
+    conn = sqlite3.connect(DATABASE_FILE)
+    conn.row_factory = sqlite3.Row  
+    return conn
+
+
 
 def init_db():
     conn = get_db_connection()
@@ -66,12 +72,7 @@ def init_db():
     conn.commit()
     conn.close()
 
-init_db()
-
-def get_db_connection():
-    conn = sqlite3.connect(DATABASE_FILE)
-    conn.row_factory = sqlite3.Row  
-    return conn
+# init_db()
 
 
 def auto_assign_volunteers():
