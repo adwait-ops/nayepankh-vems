@@ -26,14 +26,14 @@
 
     <main class="w-full max-w-6xl mx-auto px-6 py-10 flex flex-col gap-10 grow">
         <div>
-            <h2 class="text-3xl font-bold text-slate-900">Volunteer Network Hub</h2>
-            <p class="text-slate-500 text-sm mt-1">Register new foundation candidates and monitor active field mobilization segments.</p>
+            <h2 class="text-3xl font-bold text-slate-900">Volunteers Panel</h2>
+            <p class="text-slate-500 text-sm mt-1">Register new members and track ongoing field activities.</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
             
             <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm lg:col-span-1">
-                <h3 class="text-lg font-bold text-slate-900 mb-4">Onboard Volunteer</h3>
+                <h3 class="text-lg font-bold text-slate-900 mb-4">New Volunteer Details</h3>
                 
                 <form action="/add-volunteer" method="POST" class="flex flex-col gap-4">
                     <div>
@@ -59,9 +59,9 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Specialization Core Track</label>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Preferred Track</label>
                         <select name="assigned_drive" required class="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white focus:outline-none focus:border-amber-500">
-                            <option value="" disabled selected>Select specialization track</option>
+                            <option value="" disabled selected>Select preferred track</option>
                             <option value="Stray Feeding">Stray Animal Feeding</option>
                             <option value="Sanitary Distribution">Sanitary Pad Distribution</option>
                             <option value="Slum Literacy">Slum Literacy Campaign</option>

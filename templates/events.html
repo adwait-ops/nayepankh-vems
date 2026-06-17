@@ -26,7 +26,7 @@
 
     <main class="w-full max-w-6xl mx-auto px-6 py-10 flex flex-col gap-10 grow">
         <div>
-            <h2 class="text-3xl font-bold text-slate-900">Events Management Hub</h2>
+            <h2 class="text-3xl font-bold text-slate-900">Events Panel</h2>
             <p class="text-slate-500 text-sm mt-1">Schedule foundation drives, distribute resources, and track field execution.</p>
         </div>
 
@@ -61,13 +61,13 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Target Date</label>
+                            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Date</label>
                             <input type="date" name="event_date" required 
                                    class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
                         </div>
 
                         <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Target Location / Area</label>
+                            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Location</label>
                             <input type="text" name="location" required placeholder="e.g. Sector 15 Slum Clusters" 
                                    class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-amber-500">
                         </div>
@@ -80,7 +80,7 @@
 
                 <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
                     <h3 class="text-md font-bold text-slate-900 mb-0.5">Manual Staffing</h3>
-                    <p class="text-[11px] text-slate-400 mb-4">Find available unassigned volunteers and assign them to an event.</p>
+                    <p class="text-[11px] text-slate-400 mb-4">Find volunteers and assign them to an event.</p>
                     
                     <form action="/manual-assign" method="POST" class="flex flex-col gap-4">
                         <div>
@@ -96,7 +96,7 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">2. Find Available Volunteer</label>
+                            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">2. Find Volunteer</label>
                             <input type="text" id="volSearchBox" onkeyup="filterVolunteerOptions()" placeholder="Type name to filter search..." 
                                    class="w-full border border-slate-300 rounded-lg p-2.5 text-xs mb-2 focus:outline-none focus:border-amber-500 bg-slate-50">
                             
@@ -111,7 +111,7 @@
                                         {% endif %}
                                     </option>
                                 {% else %}
-                                    <option value="" disabled>No tracking records found inside network.</option>
+                                    <option value="" disabled>No records found inside network.</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -158,7 +158,7 @@
                                         {% if event.slots_remaining > 0 %}
                                             <span class="text-amber-600">Need {{ event.slots_remaining }} more</span>
                                         {% else %}
-                                            <span class="text-emerald-600 font-semibold">Fully Staffed ✨</span>
+                                            <span class="text-emerald-600 font-semibold">Fully Staffed</span>
                                         {% endif %}
                                     </div>
                                     
@@ -199,7 +199,7 @@
     <div id="rosterModal" style="display: none;" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center z-50">
         <div class="bg-white rounded-xl shadow-xl border border-slate-200 w-full max-w-sm p-6 relative mx-4">
             <h3 id="modalEventTitle" class="text-md font-bold text-slate-900 mb-1">Event Volunteer List</h3>
-            <p class="text-[11px] text-slate-400 mb-4">Currently deployed team members for this campaign.</p>
+            <p class="text-[11px] text-slate-400 mb-4">Currently deployed volunteers for this campaign.</p>
             
             <ul id="modalVolunteerList" class="divide-y divide-slate-100 max-h-48 overflow-y-auto mb-5 text-xs text-slate-700 pr-1">
                 </ul>

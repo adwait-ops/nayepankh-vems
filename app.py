@@ -135,7 +135,7 @@ def index():
 
 @app.route('/volunteers', methods=['GET'])
 def view_volunteers():
-    auto_assign_volunteers()  
+    auto_assign_volunteers()
     conn = get_db_connection()
     query = '''
         SELECT v.*, GROUP_CONCAT(e.title, ', ') as assigned_events
@@ -168,6 +168,8 @@ def add_volunteer():
         ''', (name, email, phone, assigned_drive))
         conn.commit()
         conn.close()
+        auto_assign_volunteers()
+    
     except sqlite3.IntegrityError:
         pass
             
@@ -186,7 +188,7 @@ def remove_volunteer(volunteer_id):
 
 @app.route('/events', methods=['GET'])
 def view_events():
-    auto_assign_volunteers()  
+    auto_assign_volunteers()
     conn = get_db_connection()
     
     query_events = '''
