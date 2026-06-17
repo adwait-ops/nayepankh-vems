@@ -1,5 +1,4 @@
 sqlite3
-os
 re
 datetime
 load_dotenv
