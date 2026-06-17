@@ -218,3 +218,5 @@ __marimo__/
 .streamlit/secrets.toml
 nayepankh.db
 template.sqbpro
+template.db
+!empty.db
