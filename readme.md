@@ -38,7 +38,7 @@ Follow these setups to set up the runtime environment locally:
    pip install -r requirements.txt
 ```
 2. **Setup Config Environment**
-    Create a `.env` file 
+   Use the `env-example.txt` file and rename/create a new `.env` file.
 
 3. **Execute**
 ```bash
